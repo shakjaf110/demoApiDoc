@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: A simple example of an OpenAPI specification in YAML.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8090
+    description: Development Server
+
+components:
+  schemas:
+    sampleMsg:
+      type: object
+      properties:
+        message:
+          title: A short, human-readable summary of the problem type. It shouldn't change based on the occurrence of the problem, except for purposes of localization.
+          type: string
+paths:
+  /greet:
+    get:
+      operationId: getCall
+      tags:
+        - greet
+      description:
+        test description
+      summary: Get a greeting message
+      responses:
+        '200':
+          description: Successful response from Germany
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleMsg'
+  /greet/byStatus:
+    get:
+      tags:
+        - greet
+      summary: Finds Greet by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findGreetByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            enum:
+              - available
+              - pending
+              - sold
+            default: available
+      responses:
+        '200':
+          description: Successful response from Germany by status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleMsg'
+        '400':
+          description: Invalid status value
