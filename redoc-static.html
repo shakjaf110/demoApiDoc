@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>redoc try demo</title>
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        .tryBtn{
+            font-size: 0.929em;
+            line-height: 20px;
+            background-color: #ad8972;
+            color: rgb(255, 255, 255);
+            padding: 3px 10px;
+            text-transform: uppercase;
+            font-family: Montserrat, sans-serif;
+            margin: 0px;
+            border-width: 0;
+            margin-right: 2%;
+        }
+    </style>
 </head>
 <body>
 <div id="redoc-container"></div>
@@ -18,7 +33,7 @@
       return r != null ? decodeURIComponent(r[2]) : ``
     }
     window.initTryOptions = {
-      openApi: getQueryString(`openApi`),
+      openApi: getQueryString(`openApi`)
     }
     !window.initTryOptions.openApi && (delete window.initTryOptions.openApi);
 </script>
@@ -27,7 +42,41 @@
 <script>
     initTry({
       openApi: `src/main/resources/openapi.yaml`,
-      redocOptions: {scrollYOffset: 50, noAutoAuth: true},
+      redocOptions: {
+          theme: {
+              logo: {
+                maxHeight: '60px',
+                maxWidth: '150px',
+                gutter: '2px',
+              },
+              sidebar:{
+                backgroundColor: '#f2f4f7'
+              },
+              rightPanel:{
+                backgroundColor: '#00183d'
+              },
+              colors: {
+                primary: {
+                  main: '#00183d', // Set the main primary color
+                  text: '#FF5722', // Set the text color for the primary color
+                },
+                success: {
+                  main: '#4CAF50', // Set the main success color
+                  text: '#4CAF50', // Set the text color for the success color
+                },
+                http: {
+                  get: '#2196F3', // Set the color for HTTP GET method
+                  post: '#FFC107', // Set the color for HTTP POST method
+                  put: '#8BC34A', // Set the color for HTTP PUT method
+                  delete: '#F44336', // Set the color for HTTP DELETE method
+                  patch: '#9C27B0', // Set the color for HTTP PATCH method
+                  options: '#607D8B', // Set the color for HTTP OPTIONS method
+                  head: '#00BCD4', // Set the color for HTTP HEAD method
+                  trace: '#795548', // Set the color for HTTP TRACE method
+                },
+              }
+            }
+        },
       ...window.initTryOptions,
 
     })

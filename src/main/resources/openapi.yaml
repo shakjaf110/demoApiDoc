@@ -2,7 +2,11 @@ openapi: 3.0.0
 info:
   title: Sample API
   description: A simple example of an OpenAPI specification in YAML.
-  version: 1.0.0
+  version: 2.0.0
+  x-logo:
+    url: "https://dev.eclear-solutions.com/logos/logo2.svg"
+    backgroundColor: "#FFFFFF"
+    altText: ""
 servers:
   - url: http://localhost:8090
     description: Development Server
@@ -20,9 +24,9 @@ paths:
     get:
       operationId: getCall
       tags:
-        - greet
+        - Greet
       description:
-        test description
+        test Get description
       summary: Get a greeting message
       responses:
         '200':
@@ -31,10 +35,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/sampleMsg'
+    post:
+      operationId: postCall
+      tags:
+        - Greet
+      description:
+        test Post description
+      summary: Post a greeting message
+      x-codeSamples:
+        - lang: Shell
+          source: |-
+            curl --location --request POST 'http://{server_url}/products' \
+            --header 'accept: */*' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{"name":"Product Repository Service"}'
+      requestBody:
+        required: true
+        description: Sample
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sampleMsg'
+      responses:
+        '200':
+          description: Successful response from Germany
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleMsg'
+        '400':
+          description: Invalid status value
   /greet/byStatus:
     get:
       tags:
-        - greet
+        - Greet
       summary: Finds Greet by status
       description: Multiple status values can be provided with comma separated strings
       operationId: findGreetByStatus
@@ -50,6 +84,36 @@ paths:
               - available
               - pending
               - sold
+            default: available
+      responses:
+        '200':
+          description: Successful response from Germany by status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleMsg'
+        '400':
+          description: Invalid status value
+  /greet/byStatusError:
+    get:
+      tags:
+        - Greet
+      summary: Finds Greet by status - error
+      description: Multiple status values can be provided with comma separated strings - error
+      operationId: findGreetByStatusError
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            enum:
+              - available
+              - pending
+              - sold
+              - null
             default: available
       responses:
         '200':
