@@ -19,6 +19,10 @@ components:
         message:
           title: A short, human-readable summary of the problem type. It shouldn't change based on the occurrence of the problem, except for purposes of localization.
           type: string
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: https://keycloak-dev.eclear-solutions.com/realms/authorization/.well-known/openid-configuration
 paths:
   /greet:
     get:
@@ -42,6 +46,9 @@ paths:
       description:
         test Post description
       summary: Post a greeting message
+      security:
+        - openId:
+            - SampleMsg:write
       x-codeSamples:
         - lang: Shell
           source: |-
